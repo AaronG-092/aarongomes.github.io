@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>:root {
+  --primary: #0093b8;      /* blue-teal */
+  --accent: #00bfae;       /* teal accent */
+  --bg: #f5faff;
+  --bg-alt: #e0f7fa;
+  --text: #1a222c;
+  --white: #fff;
+  --header-shadow: 0 2px 16px rgba(0,147,184,0.10);
+  --card-shadow: 0 2px 8px rgba(0,191,174,0.08);
+  --transition: 0.3s cubic-bezier(.4,2,.3,1);
+}
+
+[data-theme="dark"] {
+  --primary: #005f6a;
+  --accent: #00bfae;
+  --bg: #122025;
+  --bg-alt: #19434c;
+  --text: #e6f4fa;
+  --white: #19272e;
+  --header-shadow: 0 2px 16px rgba(0,191,174,0.18);
+  --card-shadow: 0 2px 12px rgba(0,191,174,0.22);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--primary);
+  color: var(--white);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--header-shadow);
+  transition: background var(--transition);
+}
+
+.logo {
+  font-size: 1.7rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px rgba(0,147,184,0.19);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+nav a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.06rem;
+  letter-spacing: 0.5px;
+  position: relative;
+  transition: color 0.2s;
+}
+
+nav a::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 0;
+  background: var(--accent);
+  transition: width .3s;
+  position: absolute;
+  left: 0; bottom: -3px;
+  border-radius: 3px;
+}
+
+nav a:hover, nav a.active {
+  color: var(--accent);
+}
+
+nav a.active::after,
+nav a:hover::after {
+  width: 100%;
+}
+
+.theme-toggle {
+  background: var(--accent);
+  border: none;
+  color: var(--primary);
+  padding: 0.4rem 1.1rem;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 1.8rem;
+  box-shadow: 0 2px 10px rgba(0,191,174,0.08);
+  transition: background var(--transition), color var(--transition);
+}
+
+.theme-toggle:hover {
+  background: var(--white);
+  color: var(--primary);
+}
+
+main {
+  max-width: 930px;
+  margin: 2rem auto;
+  padding: 2.3rem;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  transition: background var(--transition);
+}
+
+section {
+  display: none;
+  animation: fadeIn 0.6s;
+}
+
+section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(40px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+
+h1, h2, h3 {
+  margin-bottom: 1.2rem;
+  color: var(--primary);
+  text-shadow: 0 2px 8px rgba(0,191,174,0.09);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+/* VIDEO BACKGROUND for HOME */
+#home {
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-alt);
+  border-radius: 12px;
+  box-shadow: 0 4px 32px rgba(0,191,174,0.10);
+  padding: 0;
+}
+
+#bg-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.38;
+  transition: opacity 0.4s;
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+[data-theme="dark"] #bg-video {
+  opacity: 0.18;
+  filter: brightness(0.5) blur(0.5px) grayscale(0.2);
+}
+
+.home-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: 100%;
+  padding: 3.5rem 1rem 2.5rem 1rem;
+  background: linear-gradient(120deg, rgba(0,191,174,0.16) 0%, rgba(255,255,255,0.13) 100%);
+  border-radius: 12px;
+  backdrop-filter: blur(1.5px);
+}
+
+#home h1 {
+  font-size: 2.5rem;
+  color: var(--primary);
+}
+
+#home p {
+  font-size: 1.25rem;
+  margin-bottom: 1.8rem;
+  color: var(--text);
+}
+
+#home button {
+  margin-top: 2rem;
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+  color: var(--white);
+  border: none;
+  padding: 0.85rem 2.4rem;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 10px rgba(0,191,174,0.09);
+  transition: background var(--transition), color var(--transition);
+}
+
+#home button:hover {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color: var(--primary);
+}
+
+.skills ul {
+  list-style: none;
+}
+
+.skills li {
+  margin-bottom: 1.1rem;
+  font-weight: 500;
+}
+
+.skill-bar {
+  width: 0;
+  height: 12px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 6px;
+  margin-top: 0.3rem;
+  transition: width 1s cubic-bezier(.9,0,.6,1.1);
+  box-shadow: 0 2px 8px rgba(0,191,174,0.13);
+}
+
+#portfolio .projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 2rem;
+  margin-top: 2.2rem;
+}
+
+.project-card {
+  background: var(--bg-alt);
+  border-radius: 14px;
+  box-shadow: var(--card-shadow);
+  padding: 1.3rem 1rem 1.1rem 1rem;
+  transition: transform 0.22s, box-shadow 0.22s;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.project-card:hover {
+  transform: translateY(-10px) scale(1.04) rotate(-1deg);
+  box-shadow: 0 8px 36px rgba(0,191,174,0.18);
+  border-color: var(--accent);
+}
+
+.project-card img {
+  width: 100%;
+  border-radius: 9px;
+  margin-bottom: 0.9rem;
+  box-shadow: 0 2px 12px rgba(0,191,174,0.11);
+}
+
+.project-title {
+  font-weight: bold;
+  margin-bottom: 0.55rem;
+  color: var(--primary);
+}
+
+.project-desc {
+  font-size: 1.07rem;
+  margin-bottom: 0.7rem;
+  color: var(--text);
+}
+
+.project-link {
+  color: var(--accent);
+  text-decoration: underline;
+  font-size: 0.98rem;
+  font-weight: 500;
+}
+
+#contact form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 1.7rem;
+}
+
+#contact label {
+  font-size: 1.07rem;
+  font-weight: 500;
+}
+
+#contact input, #contact textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 7px;
+  border: 2px solid var(--bg-alt);
+  margin-top: 0.4rem;
+  font-size: 1.05rem;
+  background: var(--bg);
+  color: var(--text);
+  transition: border-color var(--transition), background var(--transition), color var(--transition);
+}
+
+#contact input:focus, #contact textarea:focus {
+  border-color: var(--accent);
+  outline: none;
+  background: var(--white);
+}
+
+#contact button {
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+  color: var(--white);
+  border: none;
+  padding: 0.8rem 2.4rem;
+  font-size: 1.13rem;
+  border-radius: 25px;
+  cursor: pointer;
+  align-self: flex-end;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0,191,174,0.09);
+  transition: background var(--transition), color var(--transition);
+}
+
+#contact button:hover {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color: var(--primary);
+}
+
+#form-message {
+  margin-top: 0.7rem;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  color: #71a8ad;
+  margin: 2.7rem 0 1.3rem 0;
+  font-size: 1.03rem;
+  letter-spacing: 1px;
+  transition: color var(--transition);
+}
+
+/* ------------------ Responsive: Tablet & Mobile ------------------ */
+@media (max-width: 1100px) {
+  main {
+    max-width: 100%;
+    margin: 2rem 1rem;
+    padding: 1.6rem;
+  }
+}
+
+@media (max-width: 800px) {
+  header {
+    flex-direction: column;
+    padding: 1rem 1rem 0.8rem 1rem;
+    gap: 0.7rem;
+  }
+  .logo {
+    font-size: 1.4rem;
+  }
+  nav ul {
+    gap: 1.2rem;
+  }
+  main {
+    padding: 1.2rem;
+  }
+  #home h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+    gap: 0.5rem;
+  }
+  .logo {
+    font-size: 1.1rem;
+  }
+  nav ul {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+  }
+  .theme-toggle {
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  main {
+    padding: 0.5rem;
+    border-radius: 7px;
+  }
+  section {
+    padding: 0;
+  }
+  #home, .home-content {
+    padding: 1.7rem 0.3rem 1.2rem 0.3rem;
+    border-radius: 7px;
+  }
+  #bg-video {
+    border-radius: 7px;
+  }
+  #home h1 {
+    font-size: 1.25rem;
+  }
+  #home p {
+    font-size: 1rem;
+  }
+  #home button {
+    font-size: 1rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 18px;
+  }
+  .skills li {
+    font-size: 0.98rem;
+  }
+  #portfolio .projects {
+    gap: 0.8rem;
+    grid-template-columns: 1fr;
+  }
+  .project-card {
+    padding: 0.7rem 0.5rem;
+    border-radius: 7px;
+  }
+  .project-card img {
+    border-radius: 5px;
+  }
+  #contact form {
+    gap: 0.7rem;
+    font-size: 0.95rem;
+  }
+  #contact button {
+    padding: 0.5rem 1.4rem;
+    font-size: 1rem;
+    border-radius: 15px;
+  }
+  footer {
+    font-size: 0.92rem;
+    margin: 1.5rem 0 0.7rem 0;
+  }
+}
+</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header>
+    <div class="logo">MyPortfolio</div>
+    <nav>
+      <ul>
+        <li><a href="#" class="nav-link" data-section="home">Home</a></li>
+        <li><a href="#" class="nav-link" data-section="about">About</a></li>
+        <li><a href="#" class="nav-link" data-section="portfolio">Portfolio</a></li>
+        <li><a href="#" class="nav-link" data-section="contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle">🌗 Theme</button>
+  </header>
+  <main>
+    <section id="home" class="active">
+      <!-- Video background -->
+      <video id="bg-video" autoplay muted loop playsinline>
+        <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="home-content">
+        <h1>Hello, I'm <span class="accent">AARON GOMES</span></h1>
+        <p>FIRST YEAR STUDENT AT FR.CRCE &amp; AN ASPIRING COMPUTER ENGINEER </p>
+        <button id="see-portfolio">See My Work</button>
+      </div>
+    </section>
+    <section id="about">
+      <h2>About Me</h2>
+      <p>
+        I'm a passionate Developer, Car Designer, Video Editor and Manga Story Writer with experience in HTML, CSS, and JavaScript.<br/>
+        I love building interactive and beautiful web experiences.
+      </p>
+      <div class="skills">
+        <h3>Skills</h3>
+        <ul>
+          <li>
+            HTML
+            <div class="skill-bar" data-percent="95"></div>
+          </li>
+          <li>
+            CSS
+            <div class="skill-bar" data-percent="90"></div>
+          </li>
+          <li>
+            JavaScript
+            <div class="skill-bar" data-percent="85"></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section id="portfolio">
+      <h2>My Projects</h2>
+      <div class="projects">
+        <!-- Projects injected by JS -->
+      </div>
+    </section>
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <form id="contact-form">
+        <label>
+          Name
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Message
+          <textarea name="message" required></textarea>
+        </label>
+        <button type="submit">Send</button>
+        <div id="form-message"></div>
+      </form>
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 AARON GOMES. All rights reserved.
+     <a href="https://github.com/AaronG-092" target="_blank" title="GitHub">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" style="width:28px; margin-left:10px; vertical-align:middle;">
+  </a>
+  <a href="https://www.linkedin.com/in/aaron-gomes-b4a1b3385" target="_blank" title="LinkedIn">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn" style="width:32px; vertical-align:middle;">
+</a>
+  </footer>
+  <script>
+    // Navigation logic
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('main section');
+    const seePortfolioBtn = document.getElementById('see-portfolio');
+
+    function showSection(sectionId) {
+      sections.forEach(sec => sec.classList.remove('active'));
+      const sec = document.getElementById(sectionId);
+      if (sec) sec.classList.add('active');
+      navLinks.forEach(link => link.classList.toggle('active', link.dataset.section === sectionId));
+      if(sectionId === 'about') animateSkills();
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        showSection(link.dataset.section);
+      });
+    });
+
+    seePortfolioBtn.addEventListener('click', () => showSection('portfolio'));
+
+    // Animated skills bar
+    function animateSkills() {
+      document.querySelectorAll('.skill-bar').forEach(bar => {
+        bar.style.width = '0';
+        setTimeout(() => {
+          bar.style.width = bar.getAttribute('data-percent') + '%';
+        }, 200);
+      });
+    }
+
+    // Portfolio Projects with placeholder images
+    const projects = [
+      {
+        title: "Personal Portfolio",
+        desc: "My own personal website built in 2025 using modern HTML, CSS, and JS.",
+        img: "https://via.placeholder.com/400x200?text=Portfolio",
+        link: ""
+      },
+      {
+        title: "Project Neon",
+        desc: "A Concept Car Design Project showcasing futuristic aesthetics.",
+        link: "https://photos.app.goo.gl/ApRV844eSdce1VL68"
+      },
+    {
+        title: "Project Storm",
+        desc: "A Concept Muscle Car Design Project showcasing classic yet futuristic aesthetics.",
+        link: "https://photos.app.goo.gl/99rGDuF7yyjA83pJ8"
+      },
+      {
+        title: "Project Aetherian",
+        desc: "A Concept Sports Car Design Project showcasing classic yet futuristic aesthetics.",
+        link: "https://photos.app.goo.gl/Eg2MafhfN2pKZUSCA"
+      },
+      {
+        title: "Project Ether",
+        desc: "A Concept Sports Car Design Project showcasing classic yet futuristic aesthetics.",
+        link: "https://photos.app.goo.gl/EVtddKGCr3txhSJbA"
+      }
+      // Add or remove objects as needed
+    ];
+
+    function renderProjects() {
+      const container = document.querySelector('.projects');
+      container.innerHTML = '';
+      projects.forEach((p, i) => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.title}" />
+          <div class="project-title">${p.title}</div>
+          <div class="project-desc">${p.desc}</div>
+          ${p.link ? `<a href="${p.link}" class="project-link" target="_blank" rel="noopener">View Project</a>` : ''}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    renderProjects();
+
+    // Contact form interactivity
+    const form = document.getElementById('contact-form');
+    const formMsg = document.getElementById('form-message');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      formMsg.textContent = "Thank you for reaching out! (This is a demo form.)";
+      form.reset();
+    });
+
+    // Optional: Show home on load
+    showSection('home');
+
+    // Theme toggle logic with [data-theme] attribute
+    const themeBtn = document.getElementById('theme-toggle');
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      themeBtn.innerText = theme === 'dark' ? '☀️' : '🌙';
+    }
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      setTheme(current);
+    });
+    // On load
+    setTheme(localStorage.getItem('theme') === 'dark' ? 'dark' : 'light');
+
+  </script>
+</body>
+</html>
